@@ -24,15 +24,24 @@ class laporanUangController{
     function list() 
     {
         $conn = $this->connection();
-
-        $sql = "select...";
+        $arrDatas = [];
+        $sql = "SELECT id, nama, tanggal, nominal, tipe, notes FROM `tbl_saving`;";
 
         if (mysqli_query($conn, $sql)) {
-            $arrDatas = [];
+            $result = mysqli_query($conn, $sql);
 
-            $sql = "SELECT id, firstname, lastname FROM MyGuests";
-$result = mysqli_query($conn, $sql);
+            while($row = $result->fetch_assoc()) {                
+                $arrDatas[] = [
+                    'id' => $row['id'],
+                    'nama' => $row['nama'],
+                    'tanggal' => $row['tanggal'],
+                    'nominal' => $row['nominal'],
+                    'tipe' => $row['tipe'],
+                    'notes' => $row['notes'],
 
+
+                ];
+            }
         } 
         
         mysqli_close($conn);
@@ -47,7 +56,7 @@ $result = mysqli_query($conn, $sql);
         $nominal = $request['nominal'];
         $tipe = $request['tipe'];
         $notes = $request['notes'];
-        $nama = $request['nama'];
+        $nama = 'joni';// $request['nama'];
 
 
         $conn = $this->connection();
