@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blank Project</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" >
+    <style>
+        body{
+            padding: 8px;
+        }
+        .text-blue{
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-3">
+            <label for="">Tanggal</label>
+            <input type="date" name="tanggal" class="form-control" id="inp-tanggal">
+        </div>
+        <div class="col-md-3">
+            <label for="">Nominal</label>
+            <input type="number" name="nominal" class="form-control" id="inp-nominal">
+        </div>
+        <div class="col-md-3">
+            <label for="In-Out">Tipe</label>
+                <select name="" id="inp-tipe" class="form-control">
+                <option value="in">Masuk</option>
+                <option value="Out">Keluar</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="">Notes</label>
+            <input type="" name="notes" class="form-control" id="inp-notes">
+        </div>
+        <div class="col-md-3">
+            <label for="">Nama</label>
+            <input type="" name="nama" class="form-control" id="inp-nama">
+        </div>
+        <div>
+            <button type="button" class="btn btn-danger" onclick="submit()">Submit</button>
+        </div>
+    </div>
+    
+    <div class="row">
+        <table id="uang"  class="table table-stipped">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Nominal</th>
+                    <th>Tipe</th>
+                    <th>Teks</th>
+                    <th>Nama</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    
+
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.js" ></script>
+
+    <script>
+        function submit() {
+            var mHtml = "" 
+            const param = {
+                "tanggal" : $("#inp-tanggal").val(),
+                "nominal" : $("#inp-nominal").val(),
+                "tipe" : $("#inp-tipe").val(),
+                "notes" : $("#inp-notes").val(),
+                "nama" : $("#inp-nama").val()
+            }
+            $.get("api/lapran-uang-create-api.php",param ,function(response, status){
+                mHtml += "<tr>"
+                mHtml += "<td>"+response.tanggal+"</td>"
+                mHtml += "<td>"+response.nominal+"</td>"
+                mHtml += "<td>"+response.tipe+"</td>"
+                mHtml += "<td>"+response.notes+"</td>"
+                mHtml += "<td>"+response.nama+"</td>"
+                mHtml += "</tr>"  
+
+                $("#uang tbody").append(mHtml)
+            })
+          
+        }
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,124 @@
+body{
+    background-color: #0a53f2;
+}
+
+.profile-picture{
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+}
+
+#idev-header{
+    background-color: #0baaf4;
+    padding: 10px;
+    border-radius: 10px;
+    /* margin: 10px; */
+}
+
+#idev-carousel{
+    margin:10px;
+}
+
+#idev-carousel img{
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.carousel-caption {
+    background: #fc0202;
+    border-radius: 10px;
+    opacity: 0.9;
+}
+
+#idev-grid-menu{
+    margin: 10px;
+}
+
+#idev-grid-menu .idev-card{
+    background-color: #ffffff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    border-radius: 10px;
+    margin: 5px 0px;
+}
+
+#idev-grid-menu .idev-card img{
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+#idev-grid-menu .caption-text{
+    padding: 8px;
+}
+
+.idev-tags{
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.tags {
+    padding: 6px;
+    background: #eaddb6;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.tags.active {
+    background: #b39b54;
+    color: #ffffff;
+}
+
+
+#idev-navigation{
+    background-color: #eaddb6;
+    /* padding: 10px; */
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+
+#idev-navigation .menu-bottom{
+    text-align: center;
+    padding: 6px;
+}
+
+#idev-navigation .menu-bottom.active{
+    background: #b39b54;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+#idev-navigation .text-mbottom{
+    font-size: 12px;
+}
+
+.carousel-control-prev, .carousel-control-next {
+    opacity: 1;
+}
+
+
+@media (min-width: 744px){
+    .section-page, .section-header{
+        margin-left: 120px;
+    }
+    
+    #idev-navigation {
+        padding: 10px;
+        position: fixed;
+        width: 10%;
+        max-width: 100px;
+        top: 0;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .label-product{
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+}
