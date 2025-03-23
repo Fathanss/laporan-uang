@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PPDB</title>
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <style>
+      body {
+        padding: 8px;
+      }
+      .text-blue {
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">Cari Siswa</div>
+          <div class="card-body">
+            <label for="">Code</label>
+            <input
+              type="number"
+              name="code"
+              class="form-control"
+              id="inp-code"
+            />
+          </div>
+          <div>
+            <button type="button" class="btn btn-danger" onclick="cari()">
+              Cari
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="section-info">
+          <div class="alert alert-info">
+            <b id="txt-alert"></b>
+          </div>
+          <div class="section-data">
+            <label for="">Code </label><br />
+            <b id="txt-code"></b><br />
+  
+            <label for="">Nama</label><br />
+            <b id="txt-nama"></b><br />
+  
+            <label for="">Alamat</label><br />
+            <b id="txt-alamat"></b><br />
+  
+            <label for="">Nilai</label><br />
+            <b id="txt-nilai"></b><br />
+  
+            <label for="">Asal</label><br />
+            <b id="txt-asal"></b><br />
+
+            <label for="">Status</label><br />
+            <b id="txt-status"></b><br />
+
+            <label for="">Mendaftar pada</label><br />
+            <b id="txt-created_at"></b><br />
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+    <script>
+      $(".section-info, .section-data").hide();
+      function cari() {
+        $(".section-info, .section-data").hide();
+        const param = {
+          code: $("#inp-code").val(),
+        };
+        $.post("api/ppdb-show-api.php", param, function (response, status) {
+          console.log(response);
+          if (response.status) {
+            $("#txt-code").text(response.data.code);
+            $("#txt-nama").text(response.data.nama);
+            $("#txt-alamat").text(response.data.alamat);
+            $("#txt-nilai").text(response.data.nilai);
+            $("#txt-asal").text(response.data.asal);
+            $("#txt-created_at").text(response.data.created_at);
+
+            $("#txt-status").text(status);
+
+            
+
+            $("#txt-alert").text("Sukses");
+            $(".section-data").fadeIn();
+
+          }else{
+            $("#txt-alert").text("Data tidak ditemukan");
+          }
+
+          $(".section-info").fadeIn();
+        });
+      }
+    </script>
+  </body>
+</html>

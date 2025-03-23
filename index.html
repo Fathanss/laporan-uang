@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blank Project</title>
+    <title>PPDB</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" >
     <style>
         body{
@@ -18,61 +18,28 @@
 <body>
     
 
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="">Start</label>
-                    <input type="date" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <label for="">End</label>
-                    <input type="date" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-danger">Filter</button>
-                </div>
-            </div>
-
     <div class="row">
         <div class="col-md-8 px-2">
-            <div class="row my-2">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 id="txt-in"></h1>
-                            <span>Masuk</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 id="txt-out"></h1>
-                            <span>Keluar</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h1 id="txt-sisa"></h1>
-                            <span>Sisa</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             
             <div class="row">
-                <table id="uang"  class="table table-stipped">
-                    <thead>
-                        <tr>
-                            <th>Tanggal</th>
-                            <th>Nominal</th>
-                            <th>Tipe</th>
-                            <th>Teks</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div class="col-md-12">
+                    <table id="ppdb"  class="table table-stipped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>code</th>
+                                <th>Nama</th>                                
+                                <th>Alamat</th>
+                                <th>Nilai</th>
+                                <th>Status</th>
+                                <th>Asal sekolah</th>                               
+                                <th>Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+               
             </div>
         </div>
 
@@ -84,23 +51,21 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="">Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" id="inp-tanggal">
+                            <label for="">Nama</label>
+                            <input type="text" name="nama" class="form-control" id="inp-nama">
                         </div>
                         <div class="col-md-6">
-                            <label for="">Nominal</label>
-                            <input type="number" name="nominal" class="form-control" id="inp-nominal">
+                            <label for="">Alamat</label>
+                            <input type="text" name="alamat" class="form-control" id="inp-alamat">
                         </div>
                         <div class="col-md-6">
-                            <label for="In-Out">Tipe</label>
-                                <select name="" id="inp-tipe" class="form-control">
-                                <option value="in">Masuk</option>
-                                <option value="Out">Keluar</option>
-                            </select>
+                            <label for="">Nilai</label>
+                            <input type="number" name="nilai" class="form-control" id="inp-nilai">
+                        </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="">Notes</label>
-                            <input type="" name="notes" class="form-control" id="inp-notes">
+                            <label for="">Asal sekolah</label>
+                            <input type="text" name="asal" class="form-control" id="inp-asal">
                         </div>
                         <div>
                             <button type="button" class="btn btn-danger" onclick="submit()">Submit</button>
@@ -113,9 +78,27 @@
         </div>
     </div>
 
-    
-    
-    
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Data akan dihapus untuk selamanya dan tidak akan kembali lagi.Apakah anda yakin?
+
+                <input type="hidden" name="id" class="form-control" id="inp-id">
+
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Keluar</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="deleteData()">Yakin</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <script src="assets/js/jquery-3.7.1.min.js"></script>
     <script src="assets/js/bootstrap.js" ></script>
@@ -125,46 +108,65 @@
 
         function submit() {
             const param = {
-                "tanggal" : $("#inp-tanggal").val(),
-                "nominal" : $("#inp-nominal").val(),
-                "tipe" : $("#inp-tipe").val(),
-                "notes" : $("#inp-notes").val(),
+                "nama" : $("#inp-nama").val(),
+                "alamat" : $("#inp-alamat").val(),
+                "nilai" : $("#inp-nilai").val(),
+                "asal" : $("#inp-asal").val(),
             }
-            $.get("api/lapran-uang-create-api.php",param ,function(response, status){
+            $.post("api/ppdb-create-api.php",param ,function(response, status){
                 list()
             })
         }
+        
+        
+        function filterDate() {
+            const startDate = $("#inp-start-date").val()
+            const endDate = $("#inp-end-date").val()
+
+            list(startDate, endDate)
+        }
 
 
-        function list() {
+        function list(start_date = null, end_date = null) {
             var mHtml = "" 
 
-            $.get("api/lapran-uang-list-api.php" ,function(responses, status){
-
-                var totalIn = 0
-                var totalOut = 0
+            $.get("api/ppdb-list-api.php", {start_date , end_date},function(responses, status){
 
                 $.each(responses, function( index, response ) {
+                    var status = "tidak-lulus"
+                    if (response.nilai >= 85) {
+                        status = "lulus"
+                    }
                     mHtml += "<tr>"
-                    mHtml += "<td>"+response.tanggal+"</td>"
-                    mHtml += "<td>"+response.nominal+"</td>"
-                    mHtml += "<td>"+response.tipe+"</td>"
-                    mHtml += "<td>"+response.notes+"</td>"
+                    mHtml += "<td>"+response.id+"</td>"
+                    mHtml += "<td>"+response.code+"</td>"
+                    mHtml += "<td>"+response.nama+"</td>"
+                    mHtml += "<td>"+response.alamat+"</td>"
+                    mHtml += "<td>"+response.nilai+"</td>"
+                    mHtml += "<td>"+status+"</td>"
+                    mHtml += "<td>"+response.asal+"</td>"
+                    mHtml += `<td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="setId(${response.id})" data-bs-target="#deleteModal">
+                            Hapus
+                        </button>    
+                    </td>`
                     mHtml += "</tr>"  
-
-                    if (response.tipe == "in") {
-                        totalIn += parseInt(response.nominal)
-                    }
-                    if (response.tipe == "Out") {
-                        totalOut += parseInt(response.nominal)
-                    }
+          
                 });
-                var sisa = totalIn - totalOut
-                $("#txt-sisa").text(sisa)
-                $("#txt-out").text(totalOut)
-                $("#txt-in").text(totalIn)
+              $("#ppdb tbody").html(mHtml)
+            })
+        }
+        function setId(id) {
+            $("#inp-id").val(id)
+            $("#deleteModalLabel").text("Hapus Id "+id)
+        }
 
-                $("#uang tbody").html(mHtml)
+        function deleteData() {
+            const param = {
+                "id" : $("#inp-id").val(),
+            }
+            $.post("api/ppdb-delete-api.php",param ,function(response, status){
+                list()
             })
         }
     </script>
